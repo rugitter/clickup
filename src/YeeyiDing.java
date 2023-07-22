@@ -37,8 +37,8 @@ public class YeeyiDing {
 	}
 	private static final Logger LOGGER = Logger.getLogger(YeeyiDing.class.getName());
 	// Step 1: Change path for dev
-	private final static String path = "";			// For dev env			
-	// private final static String path = "/home/ubuntu/java/";		// For production env
+	// private final static String path = "";			// For dev env			
+	private final static String path = "/home/ubuntu/java/";		// For production env
 	private static Mode mode = Mode.DEBUG;	// Default in Debug mode
 	
 	private static String fileName = "";
@@ -70,7 +70,7 @@ public class YeeyiDing {
 		try {
             // Start of the execution
 			log("******************************************************");
-			sleepSecond = 14;
+			sleepSecond = 30;
 			log(String.format("Sleep for %d sec before start read config......", sleepSecond));
 		    Thread.sleep(sleepSecond * 1000);
 			
@@ -124,8 +124,8 @@ public class YeeyiDing {
 	    Thread.sleep(sleepSecond * 1000);
 	    
 	    // Step 2: Shutdown Unix VM on EC2
-	    // Runtime.getRuntime().exec("sudo shutdown -h now");
-	    System.exit(0);	//	for local dev
+	    Runtime.getRuntime().exec("sudo shutdown -h now");
+	    // System.exit(0);	//	for local dev
 	}
 	
 	// (Obsolete) Read config from a local file on dev PC/EC2 instance.
@@ -168,8 +168,8 @@ public class YeeyiDing {
 		
 		// Step 3: Set up ChromeDriver path
 		// ChromeDriver Path for local dev purpose
-		// System.setProperty("webdriver.chrome.driver", path + "chromedriver");	// Prod path
-		System.setProperty("webdriver.chrome.driver", "chromedriver.exe"); //Dev path
+		System.setProperty("webdriver.chrome.driver", path + "chromedriver");	// Prod path
+		// System.setProperty("webdriver.chrome.driver", "chromedriver.exe"); //Dev path
 		
 		// Create Driver Object			
 		ChromeOptions chromeOptions = new ChromeOptions();
@@ -184,11 +184,11 @@ public class YeeyiDing {
 		// Try to open the URL for the post page
 		driver.get(url);
 		log("Post URL Opened - Before log in");
-		// log(driver.getPageSource());
+		// log(driver.getPageSource());		//turn on this switch when in debug mode
 
 		// Click on the Log in link on the post
 // 		driver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div[2]/div[1]/span/a")).click();	// fixed address, not working
-		driver.findElement(By.xpath("//*[@id=\"__next\"]/div[1]/div/div[2]/div[1]/span/a")).click();	//- new address, not working
+		driver.findElement(By.xpath("//*[@id=\"__next\"]/div[1]/div/div[2]/div[1]/span/a")).click();
 //		driver.findElement(By.xpath("//*[@id=\"login_place\"]/li[1]/span/a")).click();
 		log("Redirect to log in page");
 			
